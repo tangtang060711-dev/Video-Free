@@ -1,35 +1,32 @@
-# Gradle files
-.gradle/
+# ---------- 构建产物 ----------
 build/
+.gradle/
 .kotlin/
-
-# Local configuration file (sdk path, etc)
-local.properties
-
-# Log/OS Files
-*.log
-
-# Android Studio generated files and folders
-captures/
-.externalNativeBuild/
 .cxx/
-*.aab
+cxx/
+captures/
 *.apk
-output-metadata.json
+*.aab
+*.dex
 
-# IntelliJ
-*.iml
+# ---------- 本机配置（含绝对路径，绝不能提交）----------
+local.properties
 .idea/
-misc.xml
-deploymentTargetDropDown.xml
-render.experimental.xml
+*.iml
 
-# Keystore files
+# ---------- 签名文件 ----------
 *.jks
 *.keystore
+keystore.properties
 
-# Google Services (e.g. APIs or Firebase)
-google-services.json
-
-# Android Profiling
+# ---------- 日志 ----------
+*.log
 *.hprof
+
+# ---------- FFmpeg 预编译产物（31MB，走 GitHub Release 附件）----------
+ffmpeg/src/main/cpp/prebuilt/
+ffmpeg/libs/*.aar
+
+# ---------- FFmpeg 源码包与构建中间目录 ----------
+_ffsrc/
+ffmpeg/build_ffmpeg/
