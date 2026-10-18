@@ -1,3 +1,4 @@
+本项目由Deepseek V4Pro和V4.1Flash开发
 # VideosFree
 
 一个把「少发热」当作第一设计目标的 Android 视频播放器。
