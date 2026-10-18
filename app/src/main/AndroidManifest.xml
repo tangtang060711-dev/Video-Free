@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  权限全部集中在这里声明（各 library 模块的 manifest 都是空的）。
+  理由：权限是"用户能看到的东西"，让它们散落在 6 个模块里，
+  最终 APK 会申请什么就没人说得清了。
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- 网络拉流 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- 播放中不让 CPU 睡：真正的省电靠"少解码"，不是靠熄屏断流 -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <!-- 后台继续放音频。Android 14 起必须同时声明 FOREGROUND_SERVICE_MEDIA_PLAYBACK -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission
+        android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"
+        tools:targetApi="34" />
+
+    <!-- Android 13+ 前台服务通知要用户授权，不给就只能退化成普通后台服务 -->
+    <uses-permission
+        android:name="android.permission.POST_NOTIFICATIONS"
+        tools:targetApi="33" />
+
+    <!--
+      指纹/生物识别。Android 11+ 系统在应用调用 BiometricPrompt 前会校验这条权限，
+      缺了不会崩，但会直接回调 ERROR_HW_NOT_PRESENT —— 表现是"指纹明明录了却用不了"，
+      排查起来很绕，所以老老实实声明。
+    -->
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
+
+    <!-- 本地媒体扫描：按 API 分级申请 -->
+    <uses-permission
+        android:name="android.permission.READ_MEDIA_VIDEO"
+        tools:targetApi="33" />
+    <uses-permission
+        android:name="android.permission.READ_MEDIA_AUDIO"
+        tools:targetApi="33" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+
+    <!-- 屏幕常亮由播放页用 Window flag 实现，不需要权限 -->
+
+    <application
+        android:name=".ThermoApp"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:hardwareAccelerated="true"
+        android:icon="@drawable/ic_launcher_thermo"
+        android:label="@string/app_name"
+        android:largeHeap="false"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.ThermoPlayer"
+        tools:targetApi="35">
+
+            <!-- 刻意不声明 android:screenOrientation：
+                 写死会无视系统那个「自动旋转」开关，与「跟随系统方向锁定」冲突；
+                 而 fullSensor 四向全跟会在躺床上（手机接近平放）时于 0°/180° 之间乱翻。
+                 方向统一交给 OrientationController 在运行期决定。 -->
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden|uiMode|density"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:theme="@style/Theme.ThermoPlayer">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!-- 也能从文件管理器"打开方式"进来 -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:mimeType="video/*" />
+                <data android:mimeType="audio/*" />
+                <data android:scheme="file" />
+                <data android:scheme="content" />
+                <data android:scheme="http" />
+                <data android:scheme="https" />
+            </intent-filter>
+            <!-- 应用内深链：thermo://download?url=... 直接从浏览器/分享进来下载 -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="thermo" />
+            </intent-filter>
+        </activity>
+
+        <!--
+          mediaPlayback 类型是 Android 14 的硬要求：
+          声明了 FOREGROUND_SERVICE_MEDIA_PLAYBACK 却不写这个属性，
+          startForeground 会直接抛 ForegroundServiceStartNotAllowedException。
+        -->
+        <service
+            android:name=".PlaybackService"
+            android:exported="false"
+            android:foregroundServiceType="mediaPlayback"
+            android:stopWithTask="false" />
+    </application>
+</manifest>

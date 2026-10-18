@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    :core-player 刻意不申请任何权限、不声明任何组件。
+    权限一律由 :app 统一声明 —— 用户装完看一眼权限列表就知道这个 App 要干嘛，
+    而不是翻遍 8 个模块的 manifest 才能拼出来。
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" />

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="thermo_bg">#FF0E1013</color>
+    <color name="thermo_icon_bg">#FF10251F</color>
+</resources>

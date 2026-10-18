@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Videos Free</string>
+    <string name="channel_playback_name">播放控制</string>
+    <string name="channel_playback_desc">后台播放时的控制条</string>
+    <string name="notif_title_playing">正在播放</string>
+    <string name="notif_title_paused">已暂停</string>
+    <string name="notif_audio_only">已释放视频解码（后台只听声音）</string>
+</resources>

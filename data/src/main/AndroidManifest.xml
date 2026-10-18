@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  :data 不声明任何权限。
+  权限必须在 :app 的 manifest 里声明：库模块里用 <uses-permission> 虽然会被
+  manifest merger 带上去，但会让"这个 App 到底要什么权限"变成一个要翻 7 个模块
+  才能回答的问题。集中声明在 :app 是刻意的选择。
+-->
+<manifest />

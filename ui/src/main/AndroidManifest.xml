@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  :ui 不申请任何权限、不声明任何组件。
+  原因：权限声明会合并进最终 Manifest，如果 UI 层顺手声明了 READ_MEDIA_VIDEO，
+  那么任何依赖这个 UI 库的 App 都会被强制弹权限框。
+  所以本工程约定：**所有 uses-permission / service / activity 只在 :app 声明**。
+-->
+<manifest />

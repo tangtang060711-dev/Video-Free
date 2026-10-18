@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  :decoder 不需要任何权限。
+  探测编解码器走 MediaCodecList / MediaCodecUtil，这些是系统服务，
+  不申请权限也能读（申请了也不会多给你信息）。
+-->
+<manifest />

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  自适应图标的前景层 + 普通图标两用。
+  用 drawable 而不是 mipmap-*/ic_launcher.png，是为了不往仓库里塞二进制；
+  矢量图从 API 21 起原生支持，minSdk 24 完全没问题。
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- 背景圆角方块（自适应图标会被裁切，所以留 18dp 安全边距） -->
+    <path
+        android:fillColor="#10251F"
+        android:pathData="M0,0h108v108h-108z" />
+    <!-- 温度计外形：一根竖管 + 下端球 -->
+    <path
+        android:fillColor="#6FE3C4"
+        android:pathData="M50,28h8v32h-8z" />
+    <path
+        android:fillColor="#6FE3C4"
+        android:pathData="M54,66m-12,0a12,12 0 1,0 24,0a12,12 0 1,0 -24,0" />
+    <path
+        android:fillColor="#10251F"
+        android:pathData="M54,66m-6,0a6,6 0 1,0 12,0a6,6 0 1,0 -12,0" />
+    <!-- 三根"散热波纹"，暗示"温度"这件事 -->
+    <path
+        android:fillColor="#FFC46B"
+        android:pathData="M70,34h14v5h-14z" />
+    <path
+        android:fillColor="#FF9145"
+        android:pathData="M70,46h10v5h-10z" />
+    <path
+        android:fillColor="#FF6B6B"
+        android:pathData="M70,58h6v5h-6z" />
+</vector>
